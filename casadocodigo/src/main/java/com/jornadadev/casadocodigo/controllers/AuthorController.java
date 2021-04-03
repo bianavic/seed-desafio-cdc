@@ -2,6 +2,9 @@ package com.jornadadev.casadocodigo.controllers;
 
 import com.jornadadev.casadocodigo.models.Author;
 import com.jornadadev.casadocodigo.repositories.AuthorRepository;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class AuthorController {
 
-  @Autowired
-  private AuthorRepository authorRepository;
+  @PersistenceContext
+  private EntityManager manager;
 
   @PostMapping("/authors")
-  ResponseEntity<String> newAuthor(@Valid @RequestBody Author author) {
-    return ResponseEntity.ok("OK");
+  @Transactional
+  public void newAuthor(@Valid @RequestBody Author author) {
+    manager.persist(author);
   }
 
 }
