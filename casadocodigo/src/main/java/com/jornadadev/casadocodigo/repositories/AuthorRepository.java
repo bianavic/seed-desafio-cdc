@@ -1,2 +1,8 @@
-package com.jornadadev.casadocodigo.repositories;public interface AuthorRepository {
-}
+package com.jornadadev.casadocodigo.repositories;
+
+import com.jornadadev.casadocodigo.models.Author;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface AuthorRepository extends JpaRepository<Author, Long> {}

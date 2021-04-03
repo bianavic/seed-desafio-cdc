@@ -1,0 +1,22 @@
+
+f	java:S117%"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Úº¨•
+f	java:S117%"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Úº¨•
+f	java:S117%"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Úº¨•
+k	java:S117&"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ïâ™õüÿÿÿÿ
+k	java:S117&"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ïâ™õüÿÿÿÿ
+c
+java:S1128"HRemove this unused import 'org.hibernate.annotations.CreationTimestamp'.(¡œøÀúÿÿÿÿ
+I
+java:S1128".Remove this unused import 'java.time.Instant'.(Â‚éñÿÿÿÿÿ
+K
+java:S1128"0Remove this unused import 'java.time.LocalDate'.(›‘¬èıÿÿÿÿ
+b
+java:S1128"GRemove this unused import 'javax.validation.constraints.PastOrPresent'.(ÿ¡™¨ùÿÿÿÿ
+i	java:S116"TRename this field "author_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Û¾õ®
+p	java:S116"VRename this field "author_name" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×Ææ£úÿÿÿÿ
+l	java:S116"WRename this field "author_email" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ï’ÜŸ
+w	java:S116!"]Rename this field "author_description" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûÌ¯Æÿÿÿÿÿ
+U
+java:S1172&":Remove this unused method parameter "author_registeredAt".(Ïâ™õüÿÿÿÿ
+C
+java:S1068#"-Remove this unused "createdAt" private field.(ßä´
