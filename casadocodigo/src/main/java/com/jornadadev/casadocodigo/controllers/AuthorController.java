@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
+// total da classe = 2
 public class AuthorController {
 
   @PersistenceContext
@@ -20,7 +21,10 @@ public class AuthorController {
 
   @PostMapping("/authors")
   @Transactional
+  // 1
   public String create(@Valid @RequestBody NewAuthorRequest request) {
+    // 1
+    // total do metodo = 2
     Author author = request.toModel();
     manager.persist(author);
     return author.toString();
