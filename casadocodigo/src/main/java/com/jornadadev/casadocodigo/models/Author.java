@@ -19,6 +19,8 @@ public class Author {
   public  @NotBlank @Size(max = 400) String description;
   private LocalDateTime instantOfCriation = LocalDateTime.now();
 
+  @Deprecated
+  public Author(){}
 
   public Author(@NotBlank String authorName, @NotBlank @Email String email,
       @NotBlank @Size(max = 400) String description) {

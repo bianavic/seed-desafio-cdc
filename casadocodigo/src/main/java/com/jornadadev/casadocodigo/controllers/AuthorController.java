@@ -6,6 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+
+import com.jornadadev.casadocodigo.validations.DuplicatedEmailProhibitedValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,11 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-// total da classe = 2
+// total da classe = 3
 public class AuthorController {
 
   @PersistenceContext
   private EntityManager manager;
+  @Autowired
+  private DuplicatedEmailProhibitedValidator duplicatedEmailProhibitedValidator;
+
+  public void init(WebDataBinder binder) {
+    // 1
+    binder.addValidators(duplicatedEmailProhibitedValidator);
+  }
 
   @PostMapping("/authors")
   @Transactional
