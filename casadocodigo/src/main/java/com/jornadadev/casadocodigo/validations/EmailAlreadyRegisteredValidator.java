@@ -51,7 +51,7 @@ public class EmailAlreadyRegisteredValidator implements Validator {
 
         if (possibleAuthor.isPresent()) {
             errors.reject("email", null, "This email is already registered "
-                    + request.getEmail());
+                + request.getEmail());
         }
     }
 }
