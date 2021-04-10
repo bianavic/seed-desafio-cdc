@@ -7,7 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-import com.jornadadev.casadocodigo.validations.DuplicatedEmailProhibitedValidator;
+import com.jornadadev.casadocodigo.validations.EmailAlreadyRegisteredValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,11 +23,11 @@ public class AuthorController {
   @PersistenceContext
   private EntityManager manager;
   @Autowired
-  private DuplicatedEmailProhibitedValidator duplicatedEmailProhibitedValidator;
+  private EmailAlreadyRegisteredValidator emailAlreadyRegisteredValidator;
 
   public void init(WebDataBinder binder) {
     // 1
-    binder.addValidators(duplicatedEmailProhibitedValidator);
+    binder.addValidators(emailAlreadyRegisteredValidator);
   }
 
   @PostMapping("/authors")

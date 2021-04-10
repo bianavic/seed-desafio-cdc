@@ -11,7 +11,7 @@ import org.springframework.validation.Validator;
 import java.util.Optional;
 
 @Component
-public class DuplicatedEmailProhibitedValidator implements Validator {
+public class EmailAlreadyRegisteredValidator implements Validator {
 
     @Autowired
     private AuthorRepository authorRepository;
