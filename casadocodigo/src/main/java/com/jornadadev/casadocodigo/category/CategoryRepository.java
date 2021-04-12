@@ -1,6 +1,6 @@
-package com.jornadadev.casadocodigo.repositories;
+package com.jornadadev.casadocodigo.category;
 
-import com.jornadadev.casadocodigo.models.Category;
+import com.jornadadev.casadocodigo.category.Category;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

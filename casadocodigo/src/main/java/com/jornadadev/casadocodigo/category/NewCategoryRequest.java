@@ -1,8 +1,9 @@
-package com.jornadadev.casadocodigo.models;
+package com.jornadadev.casadocodigo.category;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotBlank;
 
+// Form Value Object, conversa com DDD e conversa com lado Web
 public class NewCategoryRequest {
 
   @JsonProperty

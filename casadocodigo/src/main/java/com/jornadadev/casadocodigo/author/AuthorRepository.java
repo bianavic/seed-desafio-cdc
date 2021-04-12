@@ -1,6 +1,6 @@
-package com.jornadadev.casadocodigo.repositories;
+package com.jornadadev.casadocodigo.author;
 
-import com.jornadadev.casadocodigo.models.Author;
+import com.jornadadev.casadocodigo.author.Author;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

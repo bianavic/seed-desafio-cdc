@@ -1,7 +1,5 @@
-package com.jornadadev.casadocodigo.controllers;
+package com.jornadadev.casadocodigo.author;
 
-import com.jornadadev.casadocodigo.models.Author;
-import com.jornadadev.casadocodigo.models.NewAuthorRequest;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;

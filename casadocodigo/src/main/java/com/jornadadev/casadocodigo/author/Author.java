@@ -1,4 +1,4 @@
-package com.jornadadev.casadocodigo.models;
+package com.jornadadev.casadocodigo.author;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;

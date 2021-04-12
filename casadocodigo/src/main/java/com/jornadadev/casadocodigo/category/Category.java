@@ -1,4 +1,4 @@
-package com.jornadadev.casadocodigo.models;
+package com.jornadadev.casadocodigo.category;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +12,6 @@ public class Category {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long Id;
-
   @NotBlank
   private String categoryName;
 
@@ -22,7 +21,6 @@ public class Category {
   }
 
   public Category(@NotBlank String categoryName) {
-    super();
     this.categoryName = categoryName;
   }
 

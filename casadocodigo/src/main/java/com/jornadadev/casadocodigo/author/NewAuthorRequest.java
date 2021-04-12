@@ -1,5 +1,6 @@
-package com.jornadadev.casadocodigo.models;
+package com.jornadadev.casadocodigo.author;
 
+import com.jornadadev.casadocodigo.author.Author;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

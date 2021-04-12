@@ -1,8 +1,8 @@
 package com.jornadadev.casadocodigo.validations;
 
-import com.jornadadev.casadocodigo.models.Category;
-import com.jornadadev.casadocodigo.models.NewCategoryRequest;
-import com.jornadadev.casadocodigo.repositories.CategoryRepository;
+import com.jornadadev.casadocodigo.category.Category;
+import com.jornadadev.casadocodigo.category.NewCategoryRequest;
+import com.jornadadev.casadocodigo.category.CategoryRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
