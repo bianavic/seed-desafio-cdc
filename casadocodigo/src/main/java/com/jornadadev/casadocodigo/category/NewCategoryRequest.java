@@ -1,13 +1,13 @@
 package com.jornadadev.casadocodigo.category;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jornadadev.casadocodigo.validations.UniqueValue;
 import javax.validation.constraints.NotBlank;
 
 // Form Value Object, conversa com DDD e conversa com lado Web
 public class NewCategoryRequest {
 
-  @JsonProperty
   @NotBlank
+  @UniqueValue(domainClass = Category.class, fieldName = "categoryName")
   private String categoryName;
 
   public Category toModel() {
