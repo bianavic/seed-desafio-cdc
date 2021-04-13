@@ -4,16 +4,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.jornadadev.casadocodigo.author.Author;
 import com.jornadadev.casadocodigo.category.Category;
+import com.jornadadev.casadocodigo.validations.ExistsId;
 import com.jornadadev.casadocodigo.validations.UniqueValue;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import javax.persistence.EntityManager;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 public class NewBookRequest {
 
@@ -31,14 +31,14 @@ public class NewBookRequest {
   @NotBlank
   @UniqueValue(domainClass = Book.class, fieldName = "bookIsbn", message = "This isbn is already registered")
   private String bookIsbn;
-  @Future
+  @NotNull @Future
   @JsonFormat(pattern = "dd/MM/yyyy", shape = Shape.STRING)
   private LocalDate dateOfPublic;
   @NotNull
-  @UniqueValue(domainClass = Category.class, fieldName = "id")
+  @ExistsId(domainClass = Category.class, fieldName = "id")
   private Long categoryId;
   @NotNull
-  @UniqueValue(domainClass = Author.class, fieldName = "id")
+  @ExistsId(domainClass = Author.class, fieldName = "id")
   private Long authorId;
 
   /**
@@ -67,12 +67,12 @@ public class NewBookRequest {
     this.authorId = authorId;
   }
 
-  /**
-   *
-   * @return
+  public Book toModel(EntityManager manager) {
+    @NotNull Category category = manager.find(Category.class, categoryId);
+    @NotNull Author author = manager.find(Author.class, authorId);
 
-  public Book toModel() {
-    return new Book(bookTitle, bookAbstract, bookPrice, bookNumberOfPages, bookIsbn, dateOfPublic, categoryId, authorId);
+    return new Book(bookTitle, bookAbstract, bookSummary, bookPrice,
+        bookNumberOfPages, bookIsbn, dateOfPublic, category, author);
   }
-   */
+
 }

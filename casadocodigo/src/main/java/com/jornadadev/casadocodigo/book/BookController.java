@@ -2,6 +2,7 @@ package com.jornadadev.casadocodigo.book;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,9 +17,13 @@ public class BookController {
   private EntityManager manager;
 
   @PostMapping(value = "books")
-  public String newBook(@Valid @RequestBody NewBookRequest request) {
-
-    return "Creating...";
+  @Transactional
+  // 1
+  public String create(@Valid @RequestBody NewBookRequest request) {
+    // 1
+    Book newBook = request.toModel(manager);
+    manager.persist(newBook);
+    return newBook.toString();
   }
 
 }

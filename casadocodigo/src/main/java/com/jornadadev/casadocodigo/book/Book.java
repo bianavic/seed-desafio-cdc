@@ -1,11 +1,15 @@
 package com.jornadadev.casadocodigo.book;
 
+import com.jornadadev.casadocodigo.author.Author;
+import com.jornadadev.casadocodigo.category.Category;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -20,7 +24,6 @@ public class Book {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   public Long id;
-
   @NotBlank
   private String bookTitle;
   @NotBlank @Size(max = 500)
@@ -32,31 +35,34 @@ public class Book {
   private Integer bookNumberOfPages;
   @NotBlank
   private String bookIsbn;
-  @Future
+  @NotNull @Future
   @DateTimeFormat(iso = ISO.DATE)
   private LocalDate dateOfPublic;
-  @NotNull
-  private Long categoryId;
-  @NotBlank
-  private Long authorId;
+  @ManyToOne
+  private @NotNull @Valid Category category;
+  @ManyToOne
+  private @NotNull @Valid Author author;
+
 
   @Deprecated
   public Book() {}
 
-  protected Book(@NotBlank String bookTitle,
+  public Book(@NotBlank String bookTitle,
       @NotBlank @Size(max = 500) String bookAbstract,
+      @NotBlank String bookSummary,
       @NotNull @Min(20) BigDecimal bookPrice,
       @NotNull @Min(100) Integer bookNumberOfPages,
-      @NotBlank String bookIsbn,
-      @Future LocalDate dateOfPublic,
-      @NotNull Long categoryId, @NotBlank Long authorId) {
+      @NotBlank String bookIsbn, @NotNull LocalDate dateOfPublic,
+      @NotNull @Valid Category category, @NotNull @Valid Author author) {
     this.bookTitle = bookTitle;
+    this.bookAbstract = bookAbstract;
+    this.bookSummary = bookSummary;
     this.bookPrice = bookPrice;
     this.bookNumberOfPages = bookNumberOfPages;
     this.bookIsbn = bookIsbn;
     this.dateOfPublic = dateOfPublic;
-    this.categoryId = categoryId;
-    this.authorId = authorId;
+    this.category = category;
+    this.author = author;
   }
 
   @Override
@@ -70,8 +76,8 @@ public class Book {
         ", bookNumberOfPages=" + bookNumberOfPages +
         ", bookIsbn='" + bookIsbn + '\'' +
         ", dateOfPublic=" + dateOfPublic +
-        ", categoryId=" + categoryId +
-        ", authorId=" + authorId +
+        ", category=" + category +
+        ", author=" + author +
         '}';
   }
 }
