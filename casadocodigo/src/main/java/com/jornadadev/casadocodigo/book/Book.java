@@ -1,22 +1,20 @@
 package com.jornadadev.casadocodigo.book;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jornadadev.casadocodigo.author.Author;
 import com.jornadadev.casadocodigo.category.Category;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 public class Book {
@@ -35,14 +33,17 @@ public class Book {
   private Integer bookNumberOfPages;
   @NotBlank
   private String bookIsbn;
-  @NotNull @Future
-  @DateTimeFormat(iso = ISO.DATE)
-  private LocalDate dateOfPublic;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+  public Date getPublicationDate() {
+    return publicationDate;
+  }
+
+  private Date publicationDate;
   @ManyToOne
   private @NotNull @Valid Category category;
   @ManyToOne
   private @NotNull @Valid Author author;
-
 
   @Deprecated
   public Book() {}
@@ -52,7 +53,7 @@ public class Book {
       @NotBlank String bookSummary,
       @NotNull @Min(20) BigDecimal bookPrice,
       @NotNull @Min(100) Integer bookNumberOfPages,
-      @NotBlank String bookIsbn, @NotNull LocalDate dateOfPublic,
+      @NotBlank String bookIsbn, @NotNull Date publicationDate,
       @NotNull @Valid Category category, @NotNull @Valid Author author) {
     this.bookTitle = bookTitle;
     this.bookAbstract = bookAbstract;
@@ -60,7 +61,7 @@ public class Book {
     this.bookPrice = bookPrice;
     this.bookNumberOfPages = bookNumberOfPages;
     this.bookIsbn = bookIsbn;
-    this.dateOfPublic = dateOfPublic;
+    this.publicationDate = publicationDate;
     this.category = category;
     this.author = author;
   }
@@ -75,7 +76,7 @@ public class Book {
         ", bookPrice=" + bookPrice +
         ", bookNumberOfPages=" + bookNumberOfPages +
         ", bookIsbn='" + bookIsbn + '\'' +
-        ", dateOfPublic=" + dateOfPublic +
+        ", publicationDate=" + publicationDate +
         ", category=" + category +
         ", author=" + author +
         '}';

@@ -1,15 +1,13 @@
 package com.jornadadev.casadocodigo.book;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.jornadadev.casadocodigo.author.Author;
 import com.jornadadev.casadocodigo.category.Category;
 import com.jornadadev.casadocodigo.validations.ExistsId;
 import com.jornadadev.casadocodigo.validations.UniqueValue;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 import javax.persistence.EntityManager;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -31,9 +29,8 @@ public class NewBookRequest {
   @NotBlank
   @UniqueValue(domainClass = Book.class, fieldName = "bookIsbn", message = "This isbn is already registered")
   private String bookIsbn;
-  @NotNull @Future
-  @JsonFormat(pattern = "dd/MM/yyyy", shape = Shape.STRING)
-  private LocalDate dateOfPublic;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+  private Date publicationDate;
   @NotNull
   @ExistsId(domainClass = Category.class, fieldName = "id")
   private Long categoryId;
@@ -41,28 +38,16 @@ public class NewBookRequest {
   @ExistsId(domainClass = Author.class, fieldName = "id")
   private Long authorId;
 
-  /**
-   *
-   * @param dateOfPublic
-   * criei este setter porque o json nao estava sendo capaz de
-   * deserializar o json com a data no parametro pelo construtor.
-   * Talvez exista um jeito melhor
-   */
-
-  public void setDateOfPublic(LocalDate dateOfPublic) {
-    this.dateOfPublic = dateOfPublic;
-  }
-
   public NewBookRequest(String bookTitle, String bookAbstract, String bookSummary,
-      BigDecimal bookPrice, Integer bookNumberOfPages, String bookIsbn,
-      Long categoryId, Long authorId) {
-    super();
+      BigDecimal bookPrice, int bookNumberOfPages, String bookIsbn,
+      Date publicationDate, Long categoryId, Long authorId) {
     this.bookTitle = bookTitle;
     this.bookAbstract = bookAbstract;
     this.bookSummary = bookSummary;
     this.bookPrice = bookPrice;
     this.bookNumberOfPages = bookNumberOfPages;
     this.bookIsbn = bookIsbn;
+    this.publicationDate = publicationDate;
     this.categoryId = categoryId;
     this.authorId = authorId;
   }
@@ -72,7 +57,7 @@ public class NewBookRequest {
     @NotNull Author author = manager.find(Author.class, authorId);
 
     return new Book(bookTitle, bookAbstract, bookSummary, bookPrice,
-        bookNumberOfPages, bookIsbn, dateOfPublic, category, author);
+        bookNumberOfPages, bookIsbn, publicationDate, category, author);
   }
 
 }
