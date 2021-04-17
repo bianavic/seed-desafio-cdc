@@ -34,6 +34,7 @@ public class Book {
   @NotBlank
   private String bookIsbn;
 
+  // set this format at body post "publicationDate": "2021-06-06"
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
   public Date getPublicationDate() {
     return publicationDate;
