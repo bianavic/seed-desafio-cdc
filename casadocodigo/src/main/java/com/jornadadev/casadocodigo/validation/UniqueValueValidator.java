@@ -1,4 +1,4 @@
-package com.jornadadev.casadocodigo.validations;
+package com.jornadadev.casadocodigo.validation;
 
 import java.util.List;
 import javax.persistence.EntityManager;

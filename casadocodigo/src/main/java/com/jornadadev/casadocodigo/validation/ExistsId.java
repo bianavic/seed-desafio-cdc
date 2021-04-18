@@ -1,4 +1,4 @@
-package com.jornadadev.casadocodigo.validations;
+package com.jornadadev.casadocodigo.validation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

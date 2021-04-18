@@ -39,4 +39,13 @@ public class Author {
         ", instantOfCriation=" + instantOfCriation +
         '}';
   }
+
+  public String getAuthorName() {
+    return authorName;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
 }

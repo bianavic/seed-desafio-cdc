@@ -1,4 +1,4 @@
-package com.jornadadev.casadocodigo.validations;
+package com.jornadadev.casadocodigo.validation;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;

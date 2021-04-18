@@ -1,6 +1,6 @@
 package com.jornadadev.casadocodigo.category;
 
-import com.jornadadev.casadocodigo.validations.CategoryNameAlreadyRegisteredValidator;
+import com.jornadadev.casadocodigo.validation.CategoryNameAlreadyRegisteredValidator;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;

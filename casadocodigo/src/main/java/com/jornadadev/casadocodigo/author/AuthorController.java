@@ -5,7 +5,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-import com.jornadadev.casadocodigo.validations.EmailAlreadyRegisteredValidator;
+import com.jornadadev.casadocodigo.validation.EmailAlreadyRegisteredValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,4 +1,4 @@
-package com.jornadadev.casadocodigo.validations;
+package com.jornadadev.casadocodigo.validation;
 
 import com.jornadadev.casadocodigo.author.Author;
 import com.jornadadev.casadocodigo.author.NewAuthorRequest;

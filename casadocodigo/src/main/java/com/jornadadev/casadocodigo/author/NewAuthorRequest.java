@@ -1,6 +1,6 @@
 package com.jornadadev.casadocodigo.author;
 
-import com.jornadadev.casadocodigo.validations.UniqueValue;
+import com.jornadadev.casadocodigo.validation.UniqueValue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

@@ -33,13 +33,6 @@ public class Book {
   private Integer bookNumberOfPages;
   @NotBlank
   private String bookIsbn;
-
-  // set this format at body post "publicationDate": "2021-06-06"
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-  public Date getPublicationDate() {
-    return publicationDate;
-  }
-
   private Date publicationDate;
   @ManyToOne
   private @NotNull @Valid Category category;
@@ -48,6 +41,12 @@ public class Book {
 
   @Deprecated
   public Book() {}
+
+  // set this format at body post "publicationDate": "2021-06-06"
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+  public Date getPublicationDate() {
+    return publicationDate;
+  }
 
   public Book(@NotBlank String bookTitle,
       @NotBlank @Size(max = 500) String bookAbstract,
@@ -65,6 +64,34 @@ public class Book {
     this.publicationDate = publicationDate;
     this.category = category;
     this.author = author;
+  }
+
+  public String getBookTitle() {
+    return bookTitle;
+  }
+
+  public Author getAuthor() {
+    return author;
+  }
+
+  public BigDecimal getBookPrice() {
+    return bookPrice;
+  }
+
+  public String getBookAbstract() {
+    return bookAbstract;
+  }
+
+  public String getBookSummary() {
+    return bookSummary;
+  }
+
+  public String getBookIsbn() {
+    return bookIsbn;
+  }
+
+  public Integer getBookNumberOfPages() {
+    return bookNumberOfPages;
   }
 
   @Override

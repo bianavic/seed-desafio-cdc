@@ -1,6 +1,6 @@
 package com.jornadadev.casadocodigo.category;
 
-import com.jornadadev.casadocodigo.validations.UniqueValue;
+import com.jornadadev.casadocodigo.validation.UniqueValue;
 import javax.validation.constraints.NotBlank;
 
 // Form Value Object, conversa com DDD e conversa com lado Web
