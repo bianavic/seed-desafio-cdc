@@ -3,10 +3,12 @@ package com.jornadadev.casadocodigo.bookDetail;
 import com.jornadadev.casadocodigo.book.Book;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 // 3
 @RestController
@@ -25,7 +27,7 @@ public class BookDetailsSiteController {
     // 1
     // o find retorna nulo
     if (fetchedBook == null) {
-      return ResponseEntity.notFound().build();
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
     // 1
