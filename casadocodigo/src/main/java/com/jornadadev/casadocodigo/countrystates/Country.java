@@ -38,9 +38,14 @@ public class Country {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Country country = (Country) o;
-    return Objects.equals(countryId, country.countryId) && Objects
-        .equals(countryName, country.countryName);
+    // desconsiderada a comparacao com countryId
+    Country other = (Country) o;
+    if (countryName == null) {
+      if (other.countryName != null)
+        return false;
+    } else if (!countryName.equals(other.countryName))
+      return false;
+    return true;
   }
 
   @Override
