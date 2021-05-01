@@ -8,6 +8,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
+import org.hibernate.validator.internal.constraintvalidators.hv.br.CNPJValidator;
+import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator;
+import org.springframework.util.Assert;
 
 /**
  * documento(cpf/cnpj) obrigatório e só precisa ser um cpf ou cnpj
@@ -24,10 +27,8 @@ public class NewPurchaseRequest {
   private String name;
   @NotBlank
   private String surname;
-  @CPF
-  private String cpf;
-  @CNPJ
-  private String cnpj;
+  @NotBlank
+  private String cpfOrCnpj;
   @NotBlank
   private String complement;
   @NotBlank
@@ -43,14 +44,12 @@ public class NewPurchaseRequest {
   @NotBlank
   private String cep;
 
-  public NewPurchaseRequest(String email, String name, String surname, String cpf, String cnpj,
-      String complement, String address, String city, Long countryId, String stateId,
-      String phone, String cep) {
+  public NewPurchaseRequest(String email, String name, String surname, String cpfOrCnpj, String complement,
+                            String address, String city, Long countryId, String stateId, String phone, String cep) {
     this.email = email;
     this.name = name;
     this.surname = surname;
-    this.cpf = cpf;
-    this.cnpj = cnpj;
+    this.cpfOrCnpj = cpfOrCnpj;
     this.complement = complement;
     this.address = address;
     this.city = city;
@@ -60,4 +59,44 @@ public class NewPurchaseRequest {
     this.cep = cep;
   }
 
+  public String getCpfOrCnpj() {
+    return cpfOrCnpj;
+  }
+
+  public boolean cpfOrCnpjIsValid() {
+    Assert.hasLength(cpfOrCnpj, "you shouldn't have to validate this document if it wasn't filled"); // bug
+
+    CPFValidator cpfValidator = new CPFValidator();
+    cpfValidator.initialize(null); // ant pattern
+
+    CNPJValidator cnpjValidator = new CNPJValidator();
+    cnpjValidator.initialize(null); // ant pattern
+
+    return cpfValidator.isValid(cpfOrCnpj, null) || cnpjValidator.isValid(cpfOrCnpj, null);
+  }
+
+  public Long getCountryId() {
+    return countryId;
+  }
+
+  public String getStateId() {
+    return stateId;
+  }
+
+  @Override
+  public String toString() {
+    return "NewPurchaseRequest{" +
+            "email='" + email + '\'' +
+            ", name='" + name + '\'' +
+            ", surname='" + surname + '\'' +
+            ", cpfOrCnpj='" + cpfOrCnpj + '\'' +
+            ", complement='" + complement + '\'' +
+            ", address='" + address + '\'' +
+            ", city='" + city + '\'' +
+            ", countryId=" + countryId +
+            ", stateId='" + stateId + '\'' +
+            ", phone='" + phone + '\'' +
+            ", cep='" + cep + '\'' +
+            '}';
+  }
 }
