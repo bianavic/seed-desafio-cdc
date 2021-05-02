@@ -1,31 +1,27 @@
 package com.jornadadev.casadocodigo.purchase;
 
-import javax.validation.Valid;
-
-import com.jornadadev.casadocodigo.validation.StateBelongsToCountryValidator;
-import com.jornadadev.casadocodigo.validation.VerifyCpfCnpjValidator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/api")
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+
+@RestController
+@RequestMapping("/api")
 public class PurchaseController {
 
-  @Autowired
-  private StateBelongsToCountryValidator stateBelongsToCountryValidator;
-
-  // validar documentos
-  @InitBinder
-  public void init(WebDataBinder binder) {
-    binder.addValidators( new VerifyCpfCnpjValidator(), stateBelongsToCountryValidator);
-  }
+  @PersistenceContext
+  private EntityManager manager;
 
   @PostMapping(value = "/purchases")
+  @Transactional
   public String createPurchase(@RequestBody @Valid NewPurchaseRequest request) {
-    return request.toString();
+
+    return "newPurchase";
   }
 
 }
