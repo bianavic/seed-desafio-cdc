@@ -16,6 +16,13 @@ public class StateBelongsToCountryValidator implements Validator {
     @PersistenceContext
     private EntityManager manager;
 
+/*
+    public StateBelongsToCountryValidator(EntityManager manager) {
+        super();
+        this.manager = manager;
+    }
+*/
+
     // garantir que a classe que esta sendo validade é a mesma ou é filha de NewPurchaseRequest
     @Override
     public boolean supports(Class<?> clazz) {
@@ -33,9 +40,8 @@ public class StateBelongsToCountryValidator implements Validator {
         State state = manager.find(State.class, request.getStateId());
 
         if (!state.belongsToCountry(country)) {
-            errors.rejectValue("stateId", null, "this state doens't belong to selected country");
-
+            errors.rejectValue("stateId", null, "this state doesn't belong to selected country");
         }
-
     }
+
 }
