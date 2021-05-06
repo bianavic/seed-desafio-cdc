@@ -18,7 +18,7 @@ public class State {
   @Deprecated
   public State() {}
 
-  public State(String stateName, Country country) {
+  public State(String stateName, @ Valid Country country) {
     this.stateName = stateName;
     this.country = country;
   }

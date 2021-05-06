@@ -38,7 +38,9 @@ public class Country {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    // desconsiderada a comparacao com countryId
+
+    // cuidado considerar id(informacao nao natural) no equals - senao diz que 2 objetos sao iguais se os ids forem nulos.
+    // considere criterio de igualdade pela informacao q é natural e obrigatoria
     Country other = (Country) o;
     if (countryName == null) {
       if (other.countryName != null)

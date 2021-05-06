@@ -5,7 +5,8 @@ import javax.validation.constraints.NotBlank;
 
 public class NewCountryRequest {
 
-  @NotBlank @UniqueValue(domainClass = Country.class, fieldName = "countryName")
+  @NotBlank
+  @UniqueValue(domainClass = Country.class, fieldName = "countryName")
   private String countryName;
 
   public String getCountryName() {

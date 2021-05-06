@@ -8,9 +8,12 @@ import javax.validation.constraints.NotNull;
 
 public class NewStateRequest {
 
-  @NotBlank @UniqueValue(domainClass = State.class, fieldName = "stateName")
+  @NotBlank
+  @UniqueValue(domainClass = State.class, fieldName = "stateName")
   private String stateName;
-  @NotNull @ExistsId(domainClass = Country.class, fieldName = "countryId")
+
+  @NotNull
+  @ExistsId(domainClass = Country.class, fieldName = "id")
   private Long countryId;
 
   public NewStateRequest(String stateName, Long countryId) {
@@ -29,4 +32,5 @@ public class NewStateRequest {
   public State toModel(EntityManager manager) {
     return new State(stateName, manager.find(Country.class, countryId));
   }
+
 }
