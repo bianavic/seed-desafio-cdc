@@ -2,6 +2,7 @@ package com.jornadadev.casadocodigo.purchase;
 
 import com.jornadadev.casadocodigo.countrystates.Country;
 import com.jornadadev.casadocodigo.countrystates.State;
+import com.jornadadev.casadocodigo.validation.Document;
 import com.jornadadev.casadocodigo.validation.ExistsId;
 import java.util.Optional;
 import javax.persistence.EntityManager;
@@ -18,6 +19,7 @@ public class NewPurchaseRequest {
   @NotBlank
   private String surname;
   @NotBlank
+  @Document
   private String document;
   @NotBlank
   private String address;

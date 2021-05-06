@@ -62,10 +62,6 @@ public class Purchase {
         this.cep = cep;
     }
 
-    public void setState(State state) {
-        this.state = state;
-    }
-
     @Override
     public String toString() {
         return "Purchase{" +
@@ -83,9 +79,9 @@ public class Purchase {
             '}';
     }
 
-/*    public void setState(@NotNull @Valid State state) {
+    public void setState(@NotNull @Valid State state) {
         Assert.notNull(country, "You cant associate a state while country is null");
-        Assert.isTrue(state.belongToCountry(country), "This state is not from the Country associated with the purchase");
+        Assert.isTrue(state.belongsToCountry(country), "This state is not from the Country associated with the purchase");
         this.state = state;
-    }*/
+    }
 }
