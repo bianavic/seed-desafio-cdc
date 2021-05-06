@@ -1,4 +1,4 @@
-package com.jornadadev.casadocodigo.countrystates;
+package com.jornadadev.casadocodigo.countrystate;
 
 import com.jornadadev.casadocodigo.validation.UniqueValue;
 import javax.validation.constraints.NotBlank;

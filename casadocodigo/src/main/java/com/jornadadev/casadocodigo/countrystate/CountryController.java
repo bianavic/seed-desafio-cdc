@@ -1,4 +1,4 @@
-package com.jornadadev.casadocodigo.countrystates;
+package com.jornadadev.casadocodigo.countrystate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

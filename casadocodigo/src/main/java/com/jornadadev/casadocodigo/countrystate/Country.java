@@ -1,4 +1,4 @@
-package com.jornadadev.casadocodigo.countrystates;
+package com.jornadadev.casadocodigo.countrystate;
 
 import java.util.Objects;
 import javax.persistence.Entity;

@@ -1,7 +1,7 @@
 package com.jornadadev.casadocodigo.validation;
 
-import com.jornadadev.casadocodigo.countrystates.Country;
-import com.jornadadev.casadocodigo.countrystates.State;
+import com.jornadadev.casadocodigo.countrystate.Country;
+import com.jornadadev.casadocodigo.countrystate.State;
 import com.jornadadev.casadocodigo.purchase.NewPurchaseRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

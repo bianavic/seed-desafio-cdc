@@ -1,7 +1,7 @@
 package com.jornadadev.casadocodigo.purchase;
 
-import com.jornadadev.casadocodigo.countrystates.Country;
-import com.jornadadev.casadocodigo.countrystates.State;
+import com.jornadadev.casadocodigo.countrystate.Country;
+import com.jornadadev.casadocodigo.countrystate.State;
 
 import javax.persistence.*;
 import javax.validation.Valid;
