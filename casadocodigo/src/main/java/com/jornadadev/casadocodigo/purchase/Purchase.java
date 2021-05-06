@@ -4,9 +4,11 @@ import com.jornadadev.casadocodigo.countrystates.Country;
 import com.jornadadev.casadocodigo.countrystates.State;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import org.springframework.util.Assert;
 
 @Entity
 public class Purchase {
@@ -26,8 +28,6 @@ public class Purchase {
     private String address;
     @NotBlank
     private String complement;
-    @NotBlank
-    private String city;
     @ManyToOne
     @NotNull
     private Country country;
@@ -39,38 +39,53 @@ public class Purchase {
     private String cep;
 
     @Deprecated
-    public Purchase(@NotBlank @Email String email, @NotBlank String name, @NotBlank String surname, @NotBlank String document, @NotBlank String complement, @NotBlank String address, @NotBlank String city, @NotNull Long countryId, Long stateId, @NotBlank String phone, @NotBlank String cep) {}
+    public Purchase(
+        @NotBlank @Email String email, @NotBlank String name,
+        @NotBlank String surname, @NotBlank String document,
+        @NotBlank String address,
+        @NotBlank String complement,
+        @NotNull Country country, @NotBlank String phone,
+        @NotBlank String cep) {}
 
-    public Purchase(String email, String name, String surname, String document, String address, String complement, String city, Country country, State state, String phone, String cep) {
+    public Purchase(String email, String name, String surname, String document,
+        String address, String complement, Country country,
+        State state, String phone, String cep) {
         this.email = email;
         this.name = name;
         this.surname = surname;
         this.document = document;
         this.address = address;
         this.complement = complement;
-        this.city = city;
         this.country = country;
         this.state = state;
         this.phone = phone;
         this.cep = cep;
     }
 
+    public void setState(State state) {
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         return "Purchase{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", document='" + document + '\'' +
-                ", address='" + address + '\'' +
-                ", complement='" + complement + '\'' +
-                ", city='" + city + '\'' +
-                ", country=" + country +
-                ", state=" + state +
-                ", phone='" + phone + '\'' +
-                ", cep='" + cep + '\'' +
-                '}';
+            ", email='" + email + '\'' +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", document='" + document + '\'' +
+            ", surname='" + surname + '\'' +
+            ", address='" + address + '\'' +
+            ", country=" + country +
+            ", state=" + state +
+            ", phone='" + phone + '\'' +
+            ", cep='" + cep + '\'' +
+            ", complement='" + complement + '\'' +
+            '}';
     }
 
+/*    public void setState(@NotNull @Valid State state) {
+        Assert.notNull(country, "You cant associate a state while country is null");
+        Assert.isTrue(state.belongToCountry(country), "This state is not from the Country associated with the purchase");
+        this.state = state;
+    }*/
 }

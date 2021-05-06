@@ -1,27 +1,30 @@
 package com.jornadadev.casadocodigo.purchase;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import com.jornadadev.casadocodigo.validation.StateBelongsToCountryValidator;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
 public class PurchaseController {
 
-  @PersistenceContext
-  private EntityManager manager;
+  @Autowired
+  private StateBelongsToCountryValidator stateBelongsToCountryValidator;
+
+  @InitBinder
+  void init(WebDataBinder binder) {
+    binder.addValidators(stateBelongsToCountryValidator);
+  }
 
   @PostMapping(value = "/purchases")
   @Transactional
   public String createPurchase(@RequestBody @Valid NewPurchaseRequest request) {
-
-    return "newPurchase";
+    return request.toString();
   }
 
 }

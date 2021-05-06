@@ -1,5 +1,9 @@
 package com.jornadadev.casadocodigo.purchase;
 
+import com.jornadadev.casadocodigo.countrystates.Country;
+import com.jornadadev.casadocodigo.countrystates.State;
+import com.jornadadev.casadocodigo.validation.ExistsId;
+import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -22,7 +26,10 @@ public class NewPurchaseRequest {
   @NotBlank
   private String city;
   @NotNull
+  @ExistsId(domainClass = Country.class, fieldName = "countryId")
   private Long countryId;
+  // lembrar q ID do estado pode ser nulo
+  @ExistsId(domainClass = State.class, fieldName = "stateId")
   private Long stateId;
   @NotBlank
   private String phone;
@@ -30,10 +37,8 @@ public class NewPurchaseRequest {
   private String cep;
 
   public NewPurchaseRequest(@Email @NotBlank String email, @NotBlank String name, @NotBlank String surname,
-                            @NotBlank String document,
-                            @NotBlank String address, @NotBlank String complement,
-                            @NotBlank String city, @NotNull Long countryId, Long stateId,
-                            @NotBlank String phone, @NotBlank String cep) {
+      @NotBlank String document, @NotBlank String address, @NotBlank String complement,
+      @NotBlank String city, @NotNull Long countryId, @NotBlank String phone, @NotBlank String cep) {
     this.email = email;
     this.name = name;
     this.surname = surname;
@@ -42,7 +47,6 @@ public class NewPurchaseRequest {
     this.complement = complement;
     this.city = city;
     this.countryId = countryId;
-    this.stateId = stateId;
     this.phone = phone;
     this.cep = cep;
   }
@@ -55,10 +59,43 @@ public class NewPurchaseRequest {
     return stateId;
   }
 
-  /**
-  public Purchase toModel(EntityManager manager) {
-
-    return new Purchase(this.email, this.name, this.surname, this.document, this.complement, this.address, this.city, this.countryId, this.stateId, this.phone, this.cep);
+  public void setStateId(Long stateId) {
+    this.stateId = stateId;
   }
-**/
+
+  public boolean hasState() {
+    return Optional.ofNullable(stateId).isPresent();
+  }
+
+  public String getDocument() {
+    return document;
+  }
+
+  @Override
+  public String toString() {
+    return "NewPurchaseRequest{" +
+        "email='" + email + '\'' +
+        ", name='" + name + '\'' +
+        ", surname='" + surname + '\'' +
+        ", document='" + document + '\'' +
+        ", address='" + address + '\'' +
+        ", complement='" + complement + '\'' +
+        ", city='" + city + '\'' +
+        ", countryId=" + countryId +
+        ", stateId=" + stateId +
+        ", phone='" + phone + '\'' +
+        ", cep='" + cep + '\'' +
+        '}';
+  }
+
+  public Purchase toModel(EntityManager manager) {
+    @NotNull
+    Country country = manager.find(Country.class, countryId);
+    Purchase purchase = new Purchase(email, name, surname, document, address, complement, country, phone, cep);
+    if (stateId != null) {
+      purchase.setState(manager.find(State.class, stateId));
+    }
+    return purchase;
+  }
+
 }
