@@ -109,4 +109,23 @@ public class Book {
         ", author=" + author +
         '}';
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    Book book = (Book) o;
+
+    return bookIsbn.equals(book.bookIsbn);
+  }
+
+  @Override
+  public int hashCode() {
+    return bookIsbn.hashCode();
+  }
 }

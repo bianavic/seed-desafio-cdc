@@ -36,11 +36,12 @@ public class StateBelongsToCountryValidator implements Validator {
         }
         NewPurchaseRequest request = (NewPurchaseRequest) target;
 
-        Country country = manager.find(Country.class, request.getCountryId());
-        State state = manager.find(State.class, request.getStateId());
-
-        if (!state.belongsToCountry(country)) {
-            errors.rejectValue("stateId", null, "this state doesn't belong to selected country");
+        if (request.hasState()) {
+            Country country = manager.find(Country.class, request.getCountryId());
+            State state = manager.find(State.class, request.getStateId());
+            if (!state.belongsToCountry(country)) {
+                errors.rejectValue("stateId", null, "this state doesn't belong to selected country");
+            }
         }
     }
 

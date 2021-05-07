@@ -4,12 +4,13 @@ import com.jornadadev.casadocodigo.book.Book;
 import java.math.BigDecimal;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Embeddable
 public class OrderItem {
 
-  @ManyToOne
+  @ManyToOne @NotNull
   private Book book;
   @Positive
   private int quantity;
@@ -19,22 +20,10 @@ public class OrderItem {
   @Deprecated
   OrderItem() {}
 
-  public OrderItem(Book book, int quantity, BigDecimal currentPrice) {
+  OrderItem(@NotNull Book book, @Positive int quantity) {
     this.book = book;
     this.quantity = quantity;
-    this.currentPrice = currentPrice;
-  }
-
-  public Book getBook() {
-    return book;
-  }
-
-  public int getQuantity() {
-    return quantity;
-  }
-
-  public BigDecimal getCurrentPrice() {
-    return currentPrice;
+    this.currentPrice = book.getBookPrice();
   }
 
   public BigDecimal total() {
@@ -46,20 +35,19 @@ public class OrderItem {
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (o == null)
       return false;
-    }
+    if (getClass() != o.getClass())
+      return false;
 
-    OrderItem orderItem = (OrderItem) o;
+    OrderItem other = (OrderItem) o;
+    if (book == null) {
+      if (other.book != null)
+        return false;
+    } else if (!book.equals(other.book))
+      return false;
 
-    if (quantity != orderItem.quantity) {
-      return false;
-    }
-    if (book != null ? !book.equals(orderItem.book) : orderItem.book != null) {
-      return false;
-    }
-    return currentPrice != null ? currentPrice.equals(orderItem.currentPrice)
-        : orderItem.currentPrice == null;
+    return true;
   }
 
   @Override

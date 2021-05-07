@@ -3,9 +3,11 @@ package com.jornadadev.casadocodigo.purchase;
 import com.jornadadev.casadocodigo.countrystate.Country;
 import com.jornadadev.casadocodigo.countrystate.State;
 import com.jornadadev.casadocodigo.order.NewOrderRequest;
+import com.jornadadev.casadocodigo.order.Order;
 import com.jornadadev.casadocodigo.validation.Document;
 import com.jornadadev.casadocodigo.validation.ExistsId;
 import java.util.Optional;
+import java.util.function.Function;
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
@@ -67,22 +69,6 @@ public class NewPurchaseRequest {
     return stateId;
   }
 
-  public void setStateId(Long stateId) {
-    this.stateId = stateId;
-  }
-
-  public boolean hasState() {
-    return Optional.ofNullable(stateId).isPresent();
-  }
-
-  public String getDocument() {
-    return document;
-  }
-
-  public NewOrderRequest getOrderRequest() {
-    return orderRequest;
-  }
-
   @Override
   public String toString() {
     return "NewPurchaseRequest{" +
@@ -105,11 +91,19 @@ public class NewPurchaseRequest {
     @NotNull
     Country country = manager.find(Country.class, countryId);
 
-    Purchase purchase = new Purchase(email, name, surname, document, address, complement, country, phone, cep);
+    Function<Purchase, Order> createOrderFunction = orderRequest.toModel(manager);
+
+    // funcao como argumento (lazy evaluation)
+    Purchase purchase = new Purchase(email, name, surname, document, address, complement, country, phone, cep, createOrderFunction);
+
     if (stateId != null) {
       purchase.setState(manager.find(State.class, stateId));
     }
     return purchase;
+  }
+
+  public boolean hasState() {
+    return Optional.ofNullable(stateId).isPresent();
   }
 
 }

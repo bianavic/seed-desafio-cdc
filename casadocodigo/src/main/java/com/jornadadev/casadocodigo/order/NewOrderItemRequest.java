@@ -2,6 +2,7 @@ package com.jornadadev.casadocodigo.order;
 
 import com.jornadadev.casadocodigo.book.Book;
 import com.jornadadev.casadocodigo.validation.ExistsId;
+import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -17,7 +18,7 @@ public class NewOrderItemRequest {
     return bookId;
   }
 
-  public NewOrderItemRequest(Long bookId, int quantity) {
+  public NewOrderItemRequest(@NotNull Long bookId, @Positive int quantity) {
     super();
     this.bookId = bookId;
     this.quantity = quantity;
@@ -31,4 +32,8 @@ public class NewOrderItemRequest {
         '}';
   }
 
+  public OrderItem toModel(EntityManager manager) {
+    @NotNull Book book = manager.find(Book.class, bookId);
+    return new OrderItem(book, quantity);
+  }
 }

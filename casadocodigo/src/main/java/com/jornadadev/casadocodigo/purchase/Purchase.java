@@ -3,6 +3,8 @@ package com.jornadadev.casadocodigo.purchase;
 import com.jornadadev.casadocodigo.countrystate.Country;
 import com.jornadadev.casadocodigo.countrystate.State;
 
+import com.jornadadev.casadocodigo.order.Order;
+import java.util.function.Function;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
@@ -15,8 +17,7 @@ public class Purchase {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
-    @Email
+    @NotBlank @Email
     private String email;
     @NotBlank
     private String name;
@@ -28,8 +29,7 @@ public class Purchase {
     private String address;
     @NotBlank
     private String complement;
-    @ManyToOne
-    @NotNull
+    @ManyToOne @NotNull
     private Country country;
     @ManyToOne
     private State state;
@@ -37,19 +37,17 @@ public class Purchase {
     private String phone;
     @NotBlank
     private String cep;
+    @OneToOne(mappedBy = "purchase", cascade = CascadeType.PERSIST)
+    private Order order;
 
-    @Deprecated
     public Purchase(
         @NotBlank @Email String email, @NotBlank String name,
         @NotBlank String surname, @NotBlank String document,
         @NotBlank String address,
         @NotBlank String complement,
         @NotNull Country country, @NotBlank String phone,
-        @NotBlank String cep) {}
-
-    public Purchase(String email, String name, String surname, String document,
-        String address, String complement, Country country,
-        State state, String phone, String cep) {
+        @NotBlank String cep,
+        Function<Purchase, Order> createOrderFunction) {
         this.email = email;
         this.name = name;
         this.surname = surname;
@@ -57,9 +55,9 @@ public class Purchase {
         this.address = address;
         this.complement = complement;
         this.country = country;
-        this.state = state;
         this.phone = phone;
         this.cep = cep;
+        this.order = createOrderFunction.apply(this);
     }
 
     @Override
@@ -76,12 +74,14 @@ public class Purchase {
             ", phone='" + phone + '\'' +
             ", cep='" + cep + '\'' +
             ", complement='" + complement + '\'' +
+            ", order=" + order +
             '}';
     }
 
     public void setState(@NotNull @Valid State state) {
-        Assert.notNull(country, "You cant associate a state while country is null");
+        Assert.notNull(country, "You cant associate a state if a country is null");
         Assert.isTrue(state.belongsToCountry(country), "This state is not from the Country associated with the purchase");
         this.state = state;
     }
+
 }
