@@ -1,4 +1,4 @@
-package com.jornadadev.casadocodigo.cupom;
+package com.jornadadev.casadocodigo.coupon;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,9 +17,11 @@ public class CouponController {
   @PostMapping(value = "/coupons")
   @Transactional
   public String createCoupon(@RequestBody @Valid NewCouponRequest newCouponRequest) {
+
     Coupon newCoupon = newCouponRequest.toModel();
     manager.persist(newCoupon);
 
     return newCoupon.toString();
   }
+
 }

@@ -1,4 +1,4 @@
-package com.jornadadev.casadocodigo.cupom;
+package com.jornadadev.casadocodigo.coupon;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,6 +10,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import org.springframework.util.Assert;
 
 @Entity
 public class Coupon {
@@ -27,6 +28,19 @@ public class Coupon {
   @Deprecated
   Coupon() {}
 
+  public Coupon(String code, BigDecimal discountPercentage, LocalDate expiresAt) {
+    Assert.isTrue(
+        expiresAt.compareTo(LocalDate.now()) >= 0, "expiration date must be in the future"
+    );
+    this.code = code;
+    this.discountPercentage = discountPercentage;
+    this.expiresAt = expiresAt;
+  }
+
+  public boolean valid() {
+    return LocalDate.now().compareTo(this.expiresAt) <= 0;
+  }
+
   public BigDecimal getDiscountPercentage() {
     return discountPercentage;
   }
@@ -35,19 +49,13 @@ public class Coupon {
     return expiresAt;
   }
 
-  public Coupon(String code, BigDecimal discountPercentage, LocalDate expiresAt) {
-    this.code = code;
-    this.discountPercentage = discountPercentage;
-    this.expiresAt = expiresAt;
-  }
-
   @Override
   public String toString() {
     return "Coupon{" +
         "id=" + id +
         ", code='" + code + '\'' +
         ", discountPercentage=" + discountPercentage +
-        ", couponValidity=" + expiresAt +
+        ", expiresAt=" + expiresAt +
         '}';
   }
 }

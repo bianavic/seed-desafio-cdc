@@ -1,4 +1,4 @@
-package com.jornadadev.casadocodigo.cupom;
+package com.jornadadev.casadocodigo.coupon;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -20,11 +20,7 @@ public class NewCouponRequest {
   private BigDecimal discountPercentage;
   @NotNull @Future
   @JsonFormat(pattern = "dd/MM/yyyy", shape = Shape.STRING)
-  private LocalDate couponValidity;
-
-  public void setCouponValidity(LocalDate couponValidity) {
-    this.couponValidity = couponValidity;
-  }
+  private LocalDate expiresAt;
 
   public NewCouponRequest(String code, BigDecimal discountPercentage) {
     super();
@@ -32,7 +28,16 @@ public class NewCouponRequest {
     this.discountPercentage = discountPercentage;
   }
 
-  Coupon toModel() {
-    return new Coupon(code, discountPercentage, couponValidity);
+  public String getCode() {
+    return code;
   }
+
+  public void setExpiresAt(LocalDate expiresAt) {
+    this.expiresAt = expiresAt;
+  }
+
+  Coupon toModel() {
+    return new Coupon(code, discountPercentage, expiresAt);
+  }
+
 }

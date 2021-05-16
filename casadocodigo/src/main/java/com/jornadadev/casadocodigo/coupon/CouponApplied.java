@@ -1,4 +1,4 @@
-package com.jornadadev.casadocodigo.cupom;
+package com.jornadadev.casadocodigo.coupon;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,27 +12,28 @@ import javax.validation.constraints.Positive;
 public class CouponApplied {
 
   @ManyToOne
-  private Coupon cupom;
+  private Coupon coupon;
   @Positive @NotNull
   private BigDecimal discountPercentage;
   @Future @NotNull
-  private LocalDate expiresAt;
+  private LocalDate validatedAt;
 
-  CouponApplied() {}
+  @Deprecated
+  public CouponApplied() {}
 
-  public CouponApplied(Coupon cupom, BigDecimal discountPercentage,
-      LocalDate expiresAt) {
-    this.cupom = cupom;
+  public CouponApplied(Coupon coupon) {
+    this.coupon = coupon;
     this.discountPercentage = discountPercentage;
-    this.expiresAt = expiresAt;
+    this.validatedAt = validatedAt;
   }
 
   @Override
   public String toString() {
-    return "CouponApplied{" +
-        "cupom=" + cupom +
+    return "CouponApplied[" +
+        "coupon=" + coupon +
         ", discountPercentage=" + discountPercentage +
-        ", couponValidity=" + expiresAt +
-        '}';
+        ", validatedAt=" + validatedAt +
+        ']';
   }
+
 }
