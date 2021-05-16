@@ -27,6 +27,10 @@ public class NewOrderRequest {
     return items;
   }
 
+  public BigDecimal getTotal() {
+    return total;
+  }
+
   public NewOrderRequest(BigDecimal total,
       List<NewOrderItemRequest> items) {
     super();

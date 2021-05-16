@@ -2,6 +2,8 @@ package com.jornadadev.casadocodigo.purchase;
 
 import com.jornadadev.casadocodigo.countrystate.Country;
 import com.jornadadev.casadocodigo.countrystate.State;
+import com.jornadadev.casadocodigo.coupon.Coupon;
+import com.jornadadev.casadocodigo.coupon.CouponRepository;
 import com.jornadadev.casadocodigo.order.NewOrderRequest;
 import com.jornadadev.casadocodigo.order.Order;
 import com.jornadadev.casadocodigo.validation.Document;
@@ -13,6 +15,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import org.springframework.util.StringUtils;
 
 public class NewPurchaseRequest {
 
@@ -43,11 +46,15 @@ public class NewPurchaseRequest {
   private String cep;
   @NotNull
   @Valid
+  // 1
   private NewOrderRequest orderRequest;
+  @ExistsId(domainClass = Coupon.class, fieldName = "code")
+  private String couponCode;
 
   public NewPurchaseRequest(@Email @NotBlank String email, @NotBlank String name, @NotBlank String surname,
       @NotBlank String document, @NotBlank String address, @NotBlank String complement,
       @NotBlank String city, @NotNull Long countryId, @NotBlank String phone, @NotBlank String cep, @NotNull NewOrderRequest orderRequest) {
+    super();
     this.email = email;
     this.name = name;
     this.surname = surname;
@@ -61,6 +68,22 @@ public class NewPurchaseRequest {
     this.orderRequest = orderRequest;
   }
 
+  public void setStateId(Long stateId) {
+    this.stateId = stateId;
+  }
+
+  public void setCouponCode(String couponCode) {
+    this.couponCode = couponCode;
+  }
+
+  public NewOrderRequest getOrderRequest() {
+    return orderRequest;
+  }
+
+  public String getDocument() {
+    return document;
+  }
+
   public Long getCountryId() {
     return countryId;
   }
@@ -71,7 +94,7 @@ public class NewPurchaseRequest {
 
   @Override
   public String toString() {
-    return "NewPurchaseRequest{" +
+    return "NewPurchaseRequest [" +
         "email='" + email + '\'' +
         ", name='" + name + '\'' +
         ", surname='" + surname + '\'' +
@@ -84,26 +107,40 @@ public class NewPurchaseRequest {
         ", phone='" + phone + '\'' +
         ", cep='" + cep + '\'' +
         ", orderRequest=" + orderRequest +
-        '}';
+        ']';
   }
 
-  public Purchase toModel(EntityManager manager) {
+  // 1 (repository)
+  public Purchase toModel(EntityManager manager,
+      CouponRepository couponRepository) {
     @NotNull
+    // 1
     Country country = manager.find(Country.class, countryId);
 
+    // 1 (compra)
+    // 1 (pedido)
     Function<Purchase, Order> createOrderFunction = orderRequest.toModel(manager);
 
-    // funcao como argumento (lazy evaluation)
+    // 1 funcao como argumento (lazy evaluation)
     Purchase purchase = new Purchase(email, name, surname, document, address, complement, country, phone, cep, createOrderFunction);
-
+    // 1
     if (stateId != null) {
       purchase.setState(manager.find(State.class, stateId));
+    }
+    // 1
+    if (StringUtils.hasText(couponCode)) {
+      Coupon coupon = couponRepository.getByCode(couponCode);
+      purchase.applyCoupon(coupon);
     }
     return purchase;
   }
 
   public boolean hasState() {
     return Optional.ofNullable(stateId).isPresent();
+  }
+
+  public Optional<String> getCouponCode() {
+    return Optional.ofNullable(couponCode);
   }
 
 }

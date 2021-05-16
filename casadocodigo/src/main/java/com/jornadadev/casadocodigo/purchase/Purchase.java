@@ -2,10 +2,18 @@ package com.jornadadev.casadocodigo.purchase;
 
 import com.jornadadev.casadocodigo.countrystate.Country;
 import com.jornadadev.casadocodigo.countrystate.State;
-
+import com.jornadadev.casadocodigo.coupon.Coupon;
+import com.jornadadev.casadocodigo.coupon.CouponApplied;
 import com.jornadadev.casadocodigo.order.Order;
 import java.util.function.Function;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -15,9 +23,11 @@ import org.springframework.util.Assert;
 @Entity
 public class Purchase {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank @Email
+    @NotBlank
+    @Email
     private String email;
     @NotBlank
     private String name;
@@ -29,7 +39,8 @@ public class Purchase {
     private String address;
     @NotBlank
     private String complement;
-    @ManyToOne @NotNull
+    @ManyToOne
+    @NotNull
     private Country country;
     @ManyToOne
     private State state;
@@ -39,6 +50,8 @@ public class Purchase {
     private String cep;
     @OneToOne(mappedBy = "purchase", cascade = CascadeType.PERSIST)
     private Order order;
+    @Embedded
+    private CouponApplied couponApplied;
 
     public Purchase(
         @NotBlank @Email String email, @NotBlank String name,
@@ -62,9 +75,9 @@ public class Purchase {
 
     @Override
     public String toString() {
-        return "Purchase{" +
-            ", email='" + email + '\'' +
-            "id=" + id +
+        return "Purchase[" +
+            ", id= + id +"
+            + "email='" + email + '\'' +
             ", name='" + name + '\'' +
             ", document='" + document + '\'' +
             ", surname='" + surname + '\'' +
@@ -75,13 +88,22 @@ public class Purchase {
             ", cep='" + cep + '\'' +
             ", complement='" + complement + '\'' +
             ", order=" + order +
-            '}';
+            ", couponApplied=" + couponApplied +
+            ']';
     }
 
     public void setState(@NotNull @Valid State state) {
         Assert.notNull(country, "You cant associate a state if a country is null");
-        Assert.isTrue(state.belongsToCountry(country), "This state is not from the Country associated with the purchase");
+        Assert.isTrue(state.belongsToCountry(country),
+            "This state is not from the Country associated with the purchase");
         this.state = state;
+    }
+
+    // TODO melhorar validacao cupons
+    public void applyCoupon(Coupon coupon) {
+        Assert.isTrue(coupon.valid(), "This coupon isn't valid anymore");
+        Assert.isNull(couponApplied, "You can't change your coupon between purchases");
+        this.couponApplied = new CouponApplied(coupon);
     }
 
 }

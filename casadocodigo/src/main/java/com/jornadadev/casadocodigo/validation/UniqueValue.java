@@ -15,7 +15,7 @@ import javax.validation.Payload;
 @Retention(RUNTIME)
 public @interface UniqueValue {
 
-  String message() default "{com.deveficiente.beanvalidation.uniquevalue}";
+  String message() default "This value is unique";
   Class<?>[] groups() default { };
   Class<? extends Payload>[] payload() default { };
   String fieldName();

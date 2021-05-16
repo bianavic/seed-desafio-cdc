@@ -2,11 +2,9 @@ package com.jornadadev.casadocodigo.validation;
 
 import com.jornadadev.casadocodigo.coupon.Coupon;
 import com.jornadadev.casadocodigo.coupon.CouponRepository;
-import com.jornadadev.casadocodigo.coupon.NewCouponRequest;
 import com.jornadadev.casadocodigo.purchase.NewPurchaseRequest;
 import java.util.Objects;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.validation.Errors;
@@ -15,7 +13,6 @@ import org.springframework.validation.Validator;
 @Component
 public class CouponValidator implements Validator {
 
-  @Autowired
   private CouponRepository couponRepository;
 
   public CouponValidator(CouponRepository couponRepository) {
@@ -25,7 +22,7 @@ public class CouponValidator implements Validator {
 
   @Override
   public boolean supports(Class<?> clazz) {
-    return NewCouponRequest.class.isAssignableFrom(clazz);
+    return NewPurchaseRequest.class.isAssignableFrom(clazz);
   }
 
   @Override
