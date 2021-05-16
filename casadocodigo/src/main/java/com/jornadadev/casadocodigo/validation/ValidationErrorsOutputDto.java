@@ -26,4 +26,8 @@ public class ValidationErrorsOutputDto {
         return fieldErrors;
     }
 
+    public int getNumberOfErrors() {
+        return this.globalErrorMessages.size() + this.fieldErrors.size();
+    }
+
 }
