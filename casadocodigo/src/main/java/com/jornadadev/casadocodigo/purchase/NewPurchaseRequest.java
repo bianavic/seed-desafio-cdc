@@ -8,6 +8,7 @@ import com.jornadadev.casadocodigo.order.NewOrderRequest;
 import com.jornadadev.casadocodigo.order.Order;
 import com.jornadadev.casadocodigo.validation.Document;
 import com.jornadadev.casadocodigo.validation.ExistsId;
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.function.Function;
 import javax.persistence.EntityManager;
@@ -15,6 +16,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.internal.constraintvalidators.hv.br.CNPJValidator;
+import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 public class NewPurchaseRequest {
@@ -51,9 +55,12 @@ public class NewPurchaseRequest {
   @ExistsId(domainClass = Coupon.class, fieldName = "code")
   private String couponCode;
 
-  public NewPurchaseRequest(@Email @NotBlank String email, @NotBlank String name, @NotBlank String surname,
+  public NewPurchaseRequest(@Email @NotBlank String email, @NotBlank String name,
+      @NotBlank String surname,
       @NotBlank String document, @NotBlank String address, @NotBlank String complement,
-      @NotBlank String city, @NotNull Long countryId, @NotBlank String phone, @NotBlank String cep, @NotNull NewOrderRequest orderRequest) {
+      @NotBlank String city, long id, @NotNull Long countryId, String s,
+      @NotBlank String phone,
+      BigDecimal bigDecimal, @NotBlank String cep, @NotNull NewOrderRequest orderRequest) {
     super();
     this.email = email;
     this.name = name;
@@ -108,6 +115,18 @@ public class NewPurchaseRequest {
         ", cep='" + cep + '\'' +
         ", orderRequest=" + orderRequest +
         ']';
+  }
+
+  public boolean validDocument() {
+    Assert.hasLength(document, "you should not validate a document if its not filled out");
+    CPFValidator cpfValidator = new CPFValidator();
+    cpfValidator.initialize(null);
+
+    CNPJValidator cnpjValidator = new CNPJValidator();
+    cnpjValidator.initialize(null);
+
+    return cpfValidator.isValid(document, null)
+        || cnpjValidator.isValid(document, null);
   }
 
   // 1 (repository)
