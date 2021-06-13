@@ -29,7 +29,7 @@ class AuthorControllerTest {
   @Autowired
   private MockMvc mvc;
 
-  private final Set<String> generatedEmails = new HashSet<>();
+  private final Set<String> emailGenerator = new HashSet<>();
 
   @Property(tries = 10)
   @Label("new author registration flow")
@@ -37,7 +37,7 @@ class AuthorControllerTest {
       @ForAll @AlphaChars @StringLength(min = 1, max = 50) String email,
       @ForAll @AlphaChars @StringLength(min = 1, max = 255) String description) throws Exception {
 
-    assumeTrue(generatedEmails.add(email));
+    assumeTrue(emailGenerator.add(email));
 
     String payload = new ObjectMapper()
         .writeValueAsString(
