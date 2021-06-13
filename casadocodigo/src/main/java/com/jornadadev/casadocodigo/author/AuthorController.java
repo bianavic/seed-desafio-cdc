@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
 // total da classe = 3
 public class AuthorController {
 
@@ -31,9 +30,9 @@ public class AuthorController {
   @PostMapping("/authors")
   @Transactional
   // 1
+  // total do metodo = 2
   public String create(@Valid @RequestBody NewAuthorRequest request) {
     // 1
-    // total do metodo = 2
     Author author = request.toModel();
     manager.persist(author);
     return author.toString();
