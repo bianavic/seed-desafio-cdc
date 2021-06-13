@@ -12,6 +12,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.springframework.util.Assert;
 
 public class NewBookRequest {
 
@@ -55,6 +56,9 @@ public class NewBookRequest {
   public Book toModel(EntityManager manager) {
     @NotNull Category category = manager.find(Category.class, categoryId);
     @NotNull Author author = manager.find(Author.class, authorId);
+
+    Assert.state(author != null, "you are trying to regsiter a book without its author");
+    Assert.state(category != null, "you are trying to regsiter a book with a non existent category");
 
     return new Book(bookTitle, bookAbstract, bookSummary, bookPrice,
         bookNumberOfPages, bookIsbn, publicationDate, category, author);
