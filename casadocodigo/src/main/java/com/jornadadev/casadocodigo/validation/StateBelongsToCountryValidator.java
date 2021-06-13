@@ -16,6 +16,11 @@ public class StateBelongsToCountryValidator implements Validator {
     @PersistenceContext
     private EntityManager manager;
 
+    public StateBelongsToCountryValidator(EntityManager manager) {
+        super();
+        this.manager = manager;
+    }
+
     // garantir que a classe que esta sendo validade é a mesma ou é filha de NewPurchaseRequest
     @Override
     public boolean supports(Class<?> clazz) {
