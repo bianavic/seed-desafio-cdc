@@ -27,11 +27,9 @@ import org.mockito.Mockito;
 class NewPurchaseRequestTest {
 
   private EntityManager manager = Mockito.mock(EntityManager.class);
-
   private CouponRepository couponRepository = Mockito.mock(CouponRepository.class);
 
   private Country country = new Country("country");
-  private State state = new State("State", country);
 
   private Coupon coupon = new Coupon("111XXX", new BigDecimal(50), LocalDate.now().plusDays(30));
   private Author author = new Author("name", "name@email.com", "description");
@@ -43,7 +41,7 @@ class NewPurchaseRequestTest {
   private NewOrderRequest order = new NewOrderRequest(new BigDecimal("50"), items);
 
   private NewPurchaseRequest request = new NewPurchaseRequest("email@email", "name", "surname", "111111", "address", "111", "city",
-      null, "999999999","1111-000", order);
+      1l, "999999999","1111-000", order);
 
   {
     when(manager.find(Country.class, 1l)).thenReturn(country);
@@ -53,7 +51,7 @@ class NewPurchaseRequestTest {
   }
 
   @Test
-  @DisplayName("a purchase with state and coupon")
+  @DisplayName("create purchase with a state and coupon")
   void test1() throws Exception {
 
     request.setCouponCode("code");
