@@ -1,15 +1,15 @@
 package com.jornadadev.casadocodigo.book;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
 
 import com.jornadadev.casadocodigo.author.Author;
-import com.jornadadev.casadocodigo.author.AuthorRepository;
+import com.jornadadev.casadocodigo.author.NewAuthorRequest;
 import com.jornadadev.casadocodigo.category.Category;
-import com.jornadadev.casadocodigo.category.CategoryRepository;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.EntityManager;
+import org.hibernate.boot.archive.scan.spi.ClassDescriptor.Categorization;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,57 +17,41 @@ import org.mockito.Mockito;
 
 class NewBookRequestTest {
 
-  private NewBookRequest request = new NewBookRequest("A Montanha Magica", "", "", BigDecimal.TEN, 120, "111XXX",
-      new Date(2021, 12, 10), 1l, 1l);
+  private NewBookRequest request = new NewBookRequest("bookTitle", "bookAbstract", "bookSummary", BigDecimal.TEN, 100, "bookIsbn",
+      new Date(2021, 10, 10), 1l, 1l);
 
   @Test
-  @DisplayName("create book when category and author are registered")
-  void test1() throws Exception {
+  @DisplayName("should create a book when category and author exists")
+  void test1() {
 
-    EntityManager manager = Mockito.mock(EntityManager.class);
+    NewBookRequest newBookRequest = new NewBookRequest("bookTitle", "", "", BigDecimal.TEN, 120, "bookIsbn",
+        new Date(2021, 12, 10), 1l, 1l);
 
-    when(manager.find(Category.class, 1l))
-        .thenReturn(new Category(""));
-
-    when(manager.find(Author.class, 1l))
-        .thenReturn(new Author("", "", ""));
-
-    // assert fraco pq nao checa o estado do livro
-    // efeito colateral do teste em cima de condicao em pre condicao
-    Assertions.assertNotNull(request.toModel(manager));
+    Assertions.assertNotNull(newBookRequest, "a instance of this book should be created");
   }
 
   @Test
-  @DisplayName("do not create a book if author doesnt exist at database")
-  void test2a() throws Exception {
+  @DisplayName("should not create a book when the author doesnt exists")
+  void test2() throws Exception {
 
     EntityManager manager = Mockito.mock(EntityManager.class);
 
-    when(manager.find(Category.class, 1l))
-        .thenReturn(new Category(""));
+    Mockito.when(manager.find(Category.class, 1l)).thenReturn(new Category(""));
+    Mockito.when(manager.find(Author.class, 1l)).thenReturn(null);
 
-    when(manager.find(Author.class, 1l))
-        .thenReturn(null);
-
-    assertThrows(IllegalStateException.class, () -> {
-      request.toModel(manager);
-    });
+    assertThrows(IllegalStateException.class, () -> request.toModel(manager));
   }
 
   @Test
-  @DisplayName("do not create a book if category doenst exists")
-  void test3() throws Exception {
+  @DisplayName("should not create a book when the category doenst exists")
+  void test3() {
 
     EntityManager manager = Mockito.mock(EntityManager.class);
 
-    when(manager.find(Category.class, 1l))
-        .thenReturn(null);
-    when(manager.find(Author.class, 1l))
-        .thenReturn(new Author("", "", ""));
+    Mockito.when(manager.find(Category.class, 1l)).thenReturn(null);
+    Mockito.when(manager.find(Author.class, 1l)).thenReturn(new Author("name", "email@email.com", "description"));
 
-    assertThrows(IllegalStateException.class, () -> {
-      request.toModel(manager);
-    });
+    assertThrows(IllegalStateException.class, () -> request.toModel(manager));
   }
 
 }
