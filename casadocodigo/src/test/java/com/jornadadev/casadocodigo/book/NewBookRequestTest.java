@@ -3,13 +3,10 @@ package com.jornadadev.casadocodigo.book;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.jornadadev.casadocodigo.author.Author;
-import com.jornadadev.casadocodigo.author.NewAuthorRequest;
 import com.jornadadev.casadocodigo.category.Category;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.EntityManager;
-import org.hibernate.boot.archive.scan.spi.ClassDescriptor.Categorization;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
