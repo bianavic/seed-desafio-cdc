@@ -32,6 +32,7 @@ class NewPurchaseRequestTest {
 
   private Country country = new Country("country");
   private State state = new State("State", country);
+
   private Coupon coupon = new Coupon("111XXX", new BigDecimal(50), LocalDate.now().plusDays(30));
   private Author author = new Author("name", "name@email.com", "description");
   private Category category = new Category("romance");
@@ -42,7 +43,7 @@ class NewPurchaseRequestTest {
   private NewOrderRequest order = new NewOrderRequest(new BigDecimal("50"), items);
 
   private NewPurchaseRequest request = new NewPurchaseRequest("email@email", "name", "surname", "111111", "address", "111", "city",
-      1l, 1l,  "111111111-11", "1111111", new BigDecimal("100"), "111XXX",  order);
+      null, "999999999","1111-000", order);
 
   {
     when(manager.find(Country.class, 1l)).thenReturn(country);
@@ -100,7 +101,7 @@ class NewPurchaseRequestTest {
   })
   void test4(String document, boolean expectedResult) throws Exception {
     NewPurchaseRequest request = new NewPurchaseRequest("email@email", "name", "surname", document, "address", "111", "city",
-        1l, 1l,  "state", "1111111", new BigDecimal("100"), null, order);
+        1l, "999999999",  "1111-000",  order);
 
     assertEquals(expectedResult, request.validDocument());
   }
