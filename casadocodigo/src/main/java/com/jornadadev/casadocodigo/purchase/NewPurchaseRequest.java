@@ -8,7 +8,6 @@ import com.jornadadev.casadocodigo.order.NewOrderRequest;
 import com.jornadadev.casadocodigo.order.Order;
 import com.jornadadev.casadocodigo.validation.Document;
 import com.jornadadev.casadocodigo.validation.ExistsId;
-import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.function.Function;
 import javax.persistence.EntityManager;
@@ -56,11 +55,9 @@ public class NewPurchaseRequest {
   private String couponCode;
 
   public NewPurchaseRequest(@Email @NotBlank String email, @NotBlank String name,
-      @NotBlank String surname,
-      @NotBlank String document, @NotBlank String address, @NotBlank String complement,
-      @NotBlank String city, long id, @NotNull Long countryId, String s,
-      @NotBlank String phone,
-      BigDecimal bigDecimal, @NotBlank String cep, @NotNull NewOrderRequest orderRequest) {
+      @NotBlank String surname, @NotBlank String document, @NotBlank String address,
+      @NotBlank String complement, @NotBlank String city, @NotNull Long countryId,
+      @NotBlank String phone, @NotBlank String cep, @NotNull @Valid NewOrderRequest orderRequest) {
     super();
     this.email = email;
     this.name = name;
@@ -130,8 +127,7 @@ public class NewPurchaseRequest {
   }
 
   // 1 (repository)
-  public Purchase toModel(EntityManager manager,
-      CouponRepository couponRepository) {
+  public Purchase toModel(EntityManager manager, CouponRepository couponRepository) {
     @NotNull
     // 1
     Country country = manager.find(Country.class, countryId);
