@@ -3,6 +3,7 @@ package com.jornadadev.casadocodigo.countrystate;
 import com.jornadadev.casadocodigo.validation.UniqueValue;
 import javax.validation.constraints.NotBlank;
 
+// classe que representa os dados da requisicao, DTO
 public class NewCountryRequest {
 
   @NotBlank

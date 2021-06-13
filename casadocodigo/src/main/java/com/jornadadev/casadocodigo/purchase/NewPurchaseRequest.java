@@ -20,6 +20,7 @@ import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
+// classe que representa os dados da requisicao, DTO
 public class NewPurchaseRequest {
 
   @NotBlank @Email

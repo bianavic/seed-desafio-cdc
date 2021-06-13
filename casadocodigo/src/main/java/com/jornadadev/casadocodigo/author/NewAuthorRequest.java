@@ -5,6 +5,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+// classe que representa os dados da requisicao, DTO
 public class NewAuthorRequest {
 
   @NotBlank

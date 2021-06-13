@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+// classe que representa os dados da requisicao, DTO
 public class NewCouponRequest {
 
   @NotBlank

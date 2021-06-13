@@ -4,6 +4,7 @@ import com.jornadadev.casadocodigo.validation.UniqueValue;
 import javax.validation.constraints.NotBlank;
 
 // Form Value Object, conversa com DDD e conversa com lado Web
+// classe que representa os dados da requisicao, DTO
 public class NewCategoryRequest {
 
   @NotBlank

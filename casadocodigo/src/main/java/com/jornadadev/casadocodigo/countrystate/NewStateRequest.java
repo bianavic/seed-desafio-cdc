@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+// classe que representa os dados da requisicao, DTO
 public class NewStateRequest {
 
   @NotBlank

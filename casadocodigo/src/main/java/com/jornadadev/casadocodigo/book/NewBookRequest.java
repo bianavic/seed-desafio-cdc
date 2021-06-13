@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.util.Assert;
 
+// classe que representa os dados da requisicao, DTO
 public class NewBookRequest {
 
   @NotBlank
