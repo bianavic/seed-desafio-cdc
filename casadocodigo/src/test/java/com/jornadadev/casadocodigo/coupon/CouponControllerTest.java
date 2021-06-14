@@ -36,7 +36,7 @@ class CouponControllerTest {
   @Label("new coupon registration flow")
   void test(@ForAll @AlphaChars @StringLength(min = 1, max = 255) String code,
       @ForAll @BigRange(min = "1", max = "90") BigDecimal discountPercentage,
-      @ForAll("futureDates")LocalDate expiresAt) throws Exception {
+      @ForAll("futureDates") LocalDate expiresAt) throws Exception {
 
     Assumptions.assumeTrue(unique.add(code));
 
